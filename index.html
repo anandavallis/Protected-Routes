@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create protected routes </title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <span>🛡️</span>
+                    <span>Secure App</span>
+                </div>
+                <div class="nav-links">
+                    <button class="nav-btn active" onclick="showPage('home')">
+                        🏠 Home
+                    </button>
+                    <button class="nav-btn" onclick="showPage('profile')">
+                        👤 Profile
+                    </button>
+                    <button class="nav-btn" onclick="showPage('admin')">
+                        ⚙️ Admin
+                    </button>
+                </div>
+                <div class="nav-user">
+                    <span id="welcomeText">Welcome, User</span>
+                    <button class="logout-btn" onclick="logout()">
+                        🚪 Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-icon">🛡️</div>
+                <h2 class="login-title">Access Restricted</h2>
+                <p class="login-subtitle">You need to be logged in to access this page.</p>
+            </div>
+
+            <div>
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Enter username"
+                        onkeypress="handleKeyPress(event)">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter password"
+                        onkeypress="handleKeyPress(event)">
+                </div>
+
+                <div id="errorMessage" class="error-message hidden"></div>
+
+                <button class="login-btn" onclick="login()" id="loginBtn">
+                    <span id="loginText">🔐 Login</span>
+                    <div id="loginSpinner" class="spinner hidden"></div>
+                </button>
+
+                <div class="demo-info">
+                    Demo credentials: admin / password
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Access Denied Page -->
+    <div class="access-denied hidden" id="accessDeniedPage">
+        <div class="access-denied-card">
+            <div class="access-denied-icon">🔒</div>
+            <h2 class="access-denied-title">Access Denied</h2>
+            <p class="access-denied-text">
+                You don't have permission to access this page.
+            </p>
+            <div class="user-info">
+                Logged in as: <span class="username" id="deniedUsername"></span>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                🚪 Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div class="page-content active" id="homePage">
+        <div class="container">
+            <div class="page-card">
+                <h1 class="page-title">
+                    🏠 Dashboard
+                </h1>
+                <p class="page-description">
+                    Welcome to your dashboard! This page is protected and only accessible to authenticated users.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 class="stat-title">Total Users</h3>
+                        <p class="stat-value">1,234</p>
+                    </div>
+                    <div class="stat-card green">
+                        <h3 class="stat-title">Active Sessions</h3>
+                        <p class="stat-value">89</p>
+                    </div>
+                    <div class="stat-card purple">
+                        <h3 class="stat-title">Revenue</h3>
+                        <p class="stat-value">$12,345</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div class="page-content" id="profilePage">
+        <div class="container">
+            <div class="page-card">
+                <h1 class="page-title">
+                    👤 User Profile
+                </h1>
+                <p class="page-description">
+                    This is your profile page. Any authenticated user can access this.
+                </p>
+                <div class="profile-form">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" value="admin" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" value="admin@example.com" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-input" value="admin" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Page -->
+    <div class="page-content" id="adminPage">
+        <div class="container">
+            <div class="page-card">
+                <h1 class="page-title">
+                    ⚙️ Admin Panel
+                </h1>
+                <p class="page-description">
+                    This page requires admin role. Only users with admin privileges can access this.
+                </p>
+                <div class="admin-alert">
+                    <div class="admin-alert-title">Admin Access Granted:</div>
+                    <div class="admin-alert-text">
+                        You have administrative privileges to manage system settings.
+                    </div>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 500; color: #111827; margin-bottom: 1rem;">
+                    System Controls
+                </h3>
+                <div class="admin-controls">
+                    <div class="admin-control">
+                        <h4 class="control-title">User Management</h4>
+                        <p class="control-description">Manage user accounts and permissions</p>
+                    </div>
+                    <div class="admin-control">
+                        <h4 class="control-title">System Settings</h4>
+                        <p class="control-description">Configure application settings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
